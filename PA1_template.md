@@ -13,6 +13,9 @@ date: The date on which the measurement was taken in YYYY-MM-DD format
 interval: Identifier for the 5-minute interval in which measurement was taken
 
 In order to proceed as mentioned in the assignment,
+
+##Loading and preprocessing the data
+
 Loading the data from given csv pre downloaded to a directory which is also set as the working directory for the given assignment.
 
 
@@ -22,6 +25,9 @@ rawactivity <- read.csv("./activity.csv", stringsAsFactors = FALSE)
 rawactivity[, "date"] <- as.Date(rawactivity[, "date"], format = "%Y-%m-%d")
 ```
 
+
+
+##What is mean total number of steps taken per day?
 
 Displaying the required Histogram, mean and median of total number of steps taken
 
@@ -38,13 +44,14 @@ hist(stepsbyday$steps, breaks = nrow(stepsbyday), main = "Number of steps per da
 
 ```r
 ## calculating the requested mean and median
-meanstep <- round(mean(stepsbyday$steps), 3)
+meanstep <- format(round(mean(stepsbyday$steps), 3), digits = 7, nsmall = 3)
 medianstep <- median(stepsbyday$steps)
 ```
 
-The mean of total number of steps per day is: 1.0766 &times; 10<sup>4</sup>  
+The mean of total number of steps per day is: 10766.189  
 The median of number of steps per day is: 10765
 
+##What is the average daily activity pattern?
 
 Daily activity pattern starts with aggregation of data across all days grouped over intervals, followed by ploting of the line graph showing activity and thus calculating time interval where max number of mean step is being observed
 
@@ -54,7 +61,7 @@ Daily activity pattern starts with aggregation of data across all days grouped o
 vals <- aggregate(steps ~ interval, data = rawactivity, FUN = mean, na.rm = TRUE)
 ## avg number of steps by interval plot for the above case
 plot(vals$interval, vals$steps, type = "l", xlab = "Time interval", ylab = "Average Number of steps", 
-    col = "maroon")
+    col = "maroon", main = "Daily activity Pattern")
 ```
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
@@ -66,6 +73,8 @@ mxstpint <- vals$interval[vals$steps == max(vals$steps)]
 
 The average number of steps where maximum at 835 time interval
 
+
+##Imputing missing values
 
 The process for imputing is :
 first finding the number of NA values
@@ -95,19 +104,20 @@ hist(nstepsbyday$steps, breaks = nrow(nstepsbyday), main = "Number of steps per 
 
 ```r
 nvals <- aggregate(steps ~ interval, data = comactivity, FUN = mean, na.rm = TRUE)
-nmeanstep <- round(mean(nstepsbyday$steps), 3)
-nmedianstep <- median(nstepsbyday$steps)
+nmeanstep <- format(round(mean(nstepsbyday$steps), 3), digits = 7, nsmall = 3)
+nmedianstep <- format(median(nstepsbyday$steps), digits = 7, nsmall = 3)
 ```
 
 
-the total number of NA is 2304 with percentage of NA corresponding to given data is 0.1311%
+the total number of NA is 2304 with percentage of NA corresponding to given data is 13.11%
 
-The new mean of total number of steps per day is: 1.0766 &times; 10<sup>4</sup>  
-The new median of number of steps per day is: 1.0762 &times; 10<sup>4</sup> 
+The new mean of total number of steps per day is: 10765.639  
+The new median of number of steps per day is: 10762.000 
 
 the difference in value observed is 0.5 step for mean and 3 for median, which can be due to input of new data alongwith the rounding off differences.
 
 
+##Are there differences in activity patterns between weekdays and weekends?
 
 TO plot this graph we had to add new columns to define day of the week and type of day(either weekday or weekend) for ease of the computation
 
@@ -139,13 +149,13 @@ xyplot(x ~ interval | dtype, data = aidval, layout = c(1, 2), type = "l", ylab =
 ## aggregation based on dates for weekdays and weekend
 wdstepsbyday <- aggregate(steps ~ date, data = wdact, FUN = sum, na.rm = TRUE)
 wnstepsbyday <- aggregate(steps ~ date, data = wnact, FUN = sum, na.rm = TRUE)
-wdmeanstep <- round(mean(wdstepsbyday$steps), 3)
-wnmeanstep <- mean(wnstepsbyday$steps)
+wdmeanstep <- format(round(mean(wdstepsbyday$steps), 3), digits = 7, nsmall = 3)
+wnmeanstep <- format(mean(wnstepsbyday$steps), digits = 7, nsmall = 3)
 ```
 
 
-The mean of total number of steps per weekday is: 1.0255 &times; 10<sup>4</sup>
-The mean of total number of steps per weekend is: 1.2201 &times; 10<sup>4</sup>
+The mean of total number of steps per weekday is: 10255.289
+The mean of total number of steps per weekend is: 12201.000
 The number of steps taken on a weekend are more than a weekend based on the values
 
 
