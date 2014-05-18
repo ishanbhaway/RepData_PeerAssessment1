@@ -121,7 +121,7 @@ wnmeanstep <- format(mean(wnstepsbyday$steps),digits=7,nsmall=3)
 
 The mean of total number of steps per weekday is: `r wdmeanstep`
 The mean of total number of steps per weekend is: `r wnmeanstep`
-The number of steps taken on a weekend are more than a weekend based on the values
+The avg number of steps taken on a weekend are more than a weekday based on the values
 
 
 END

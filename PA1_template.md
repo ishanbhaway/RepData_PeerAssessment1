@@ -156,7 +156,7 @@ wnmeanstep <- format(mean(wnstepsbyday$steps), digits = 7, nsmall = 3)
 
 The mean of total number of steps per weekday is: 10255.289
 The mean of total number of steps per weekend is: 12201.000
-The number of steps taken on a weekend are more than a weekend based on the values
+The avg number of steps taken on a weekend are more than a weekday based on the values
 
 
 END
